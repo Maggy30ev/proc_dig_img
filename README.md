@@ -1,0 +1,1 @@
+# Proyecto para la materia Procesamiento de imágenes
