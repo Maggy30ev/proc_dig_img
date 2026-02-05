@@ -1,5 +1,5 @@
 '''Este archivo contiene una serie de funciones (implementadas desde cero) para aumentar datos de 
-   imágenes utilizando varias técnicas.
+   imágenes utilizando varias técnicas. 
 
     Las funciones incluyen las siguientes tecnicas:
 

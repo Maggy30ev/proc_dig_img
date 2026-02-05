@@ -20,7 +20,7 @@ def mostrar_imagenes(imagenes_config, figsize=(15, 5), cmap='gray'):
     Ejemplo:
     --------
     config = [
-        {'imagen': img1, 'titulo': 'Original'},
+        {'imagen': img1, 'titulo': 'Original'}, 
         {'imagen': img2, 'titulo': 'Horizontal', 'texto': "flip(img, mode='horizontal')"},
         {'imagen': img3, 'titulo': 'Vertical', 'texto': "flip(img, mode='vertical')", 'texto_pos': (0.5, -0.15)}
     ]

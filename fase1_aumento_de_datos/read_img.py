@@ -15,7 +15,7 @@ def read_image_as_grayscale(image_path):
     # Extraer los canales RGB
     r = img_array[:, :, 0]
     g = img_array[:, :, 1]
-    b = img_array[:, :, 2]
+    b = img_array[:, :, 2] 
 
     # Convertir a escala de grises usando la formula de luminosidad
     # ITU‑R BT.601 
