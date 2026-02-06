@@ -224,17 +224,18 @@ class DataAugmentation:
         """
         # Obtener dimensiones de la imagen original
         orig_h, orig_w = image.shape
+
+        # Centro de la imagen
+        center_x, center_y = orig_w / 2, orig_h / 2
+
+        # Creamos matrices de coordenadas para TODOS los píxeles de salida
+        j_coords, i_coords = np.meshgrid(np.arange(orig_w), np.arange(orig_h))
+
+        # Mapeamos las coordenadas de la imagen de salida a la original (mapeo inverso)
+        # Escalamos respecto al centro de la imagen
+        x_prima = (j_coords - center_x) / x_factor + center_x
+        y_prima = (i_coords - center_y) / y_factor + center_y
         
-        # Calculamos las nuevas dimensiones
-        new_h = int(orig_h * y_factor)
-        new_w = int(orig_w * x_factor)
-        
-        # Crear matrices de coordenadas para TODOS los píxeles de salida
-        j_coords, i_coords = np.meshgrid(np.arange(new_w), np.arange(new_h))
-        
-        # Mapear coordenadas de la imagen nueva a la original (mapeo inverso)
-        x_prima = j_coords / x_factor
-        y_prima = i_coords / y_factor
         
         # Aplicamos la interpolación bilineal
         interpolated, valid_mask = DataAugmentation._bilinear_interpolation(
