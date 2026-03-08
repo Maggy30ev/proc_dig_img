@@ -38,7 +38,7 @@ project_dir = make_dir_function("")
 for dir_type in [
     ["data"],
     ["fase1_aumento_de_datos"],
-    ["fase2_filtrado_espacio"]
+    ["fase2_fil"]
 ]:
     dir_var = "_".join(dir_type) + "_dir"
     exec(f"{dir_var} = make_dir_function({dir_type})")
