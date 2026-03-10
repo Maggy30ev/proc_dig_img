@@ -13,4 +13,5 @@ dependencies = [
     "pyprojroot>=0.3.0",
     "scikit-image>=0.26.0",
     "scipy>=1.17.1",
+    "seaborn[stats]>=0.13.2",
 ]
