@@ -40,7 +40,7 @@ def read_image_as_grayscale(image_path, mode='normal'):
     
     # Y = np.clip(Y, 0, 255).astype(np.uint8)
     
-    return Y
+    return Y.astype(np.uint8)
 
 def read_image_as_rgb(image_path):
     # Abrir la imagen 
