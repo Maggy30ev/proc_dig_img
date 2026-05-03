@@ -11,3 +11,6 @@ wheels/
 
 # Data files
 data/
+data2/
+fase3_segmentacion/data_color/
+fase3_segmentacion/mascaras/

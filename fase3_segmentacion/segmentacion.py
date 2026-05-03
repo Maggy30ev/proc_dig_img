@@ -1,9 +1,6 @@
 import numpy as np
 from scipy.ndimage import convolve
 
-
-
-
 class Segmentacion:
 
     #SUBFUNCIÓN COMPARTIDA (Otsu)
@@ -186,3 +183,56 @@ class Segmentacion:
                             cambio = True
 
         return borde[1:M+1, 1:N+1]
+    
+    @staticmethod
+    def kmeans_img(canales, K, max_iter=100, tol=1e-4, seed=42):
+        """Segmenta una imagen usando K-means.
+
+        Parámetros:
+        canales  : tuple de arrays 2D numpy (H, S, I) o (R, G, B), etc.
+                   Cada canal debe estar normalizado en [0, 1] excepto H
+                   que se normaliza automáticamente.
+        K        : Número de clusters deseados
+        max_iter : Número máximo de iteraciones. Por defecto 100.
+        tol      : Tolerancia para convergencia. Por defecto 1e-4.
+        seed     : Semilla para reproducibilidad. Por defecto 42.
+
+        Retorna:
+        labels   : Array de etiquetas de cluster para cada píxel (N,)
+        centroids : Array de centroides finales (K, D)
+        """
+        np.random.seed(seed)
+
+        # Preparar los datos
+        canales_norm = []
+        for canal in canales:
+            c = canal.astype(float)
+            if c.max() > 1.0:
+                c = c / c.max()
+            canales_norm.append(c)
+
+        alto, ancho = canales_norm[0].shape
+
+        pixeles = np.stack([c.flatten() for c in canales_norm], axis=1)
+
+        N, D = pixeles.shape
+        idx = np.random.choice(N, K, replace=False)
+        centroides = pixeles[idx].copy()
+        
+        for it in range(max_iter):
+            # asignación
+            distancias = np.linalg.norm(pixeles[:, np.newaxis] - centroides, axis=2)
+            etiquetas = np.argmin(distancias, axis=1)
+
+            # actualización
+            nuevos = np.array([pixeles[etiquetas == k].mean(axis=0) if np.any(etiquetas == k)
+                           else centroides[k] for k in range(K)])
+            
+            # convergencia
+            if np.linalg.norm(nuevos - centroides) < tol:
+                break
+            centroides = nuevos
+            
+        mascara = etiquetas.reshape(alto, ancho)
+
+        return mascara, centroides
